@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/action_sheet_item"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="56dp"
     android:clickable="true"
     android:focusable="true"
     android:orientation="horizontal"
@@ -13,6 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textColor="#212121"
+        android:textSize="16sp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"/>
 </LinearLayout>

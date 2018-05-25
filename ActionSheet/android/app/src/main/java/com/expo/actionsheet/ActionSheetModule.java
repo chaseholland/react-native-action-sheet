@@ -1,6 +1,7 @@
 package com.expo.actionsheet;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.util.Log;
@@ -10,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -39,6 +39,16 @@ public class ActionSheetModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void showActionSheetWithOptions(ReadableMap options, final Callback onSelect) {
         ReadableArray optionArray = options.getArray("options");
+        String title = "";
+        String tintColor = "";
+        
+        if(options.hasKey("title")) {
+            title = options.getString("title");
+        }
+        if(options.hasKey("tintColor")) {
+            tintColor = options.getString("tintColor");
+        }
+
         ArrayList<String> optionsTitles = new ArrayList<>();
         for (int i = 0; i < optionArray.size(); i++) {
             optionsTitles.add(optionArray.getString(i));
@@ -46,9 +56,14 @@ public class ActionSheetModule extends ReactContextBaseJavaModule {
         actionSheetDialog = new BottomSheetDialog(getCurrentActivity());
         View sheetView = getCurrentActivity().getLayoutInflater().inflate(R.layout.action_sheet_view, null);
         final ListView listView = (ListView) sheetView.findViewById(R.id.action_sheet_list_view);
+        final TextView titleView = (TextView) sheetView.findViewById(R.id.action_sheet_title);
 
+        if(!title.isEmpty()){
+            titleView.setVisibility(View.VISIBLE);
+            titleView.setText(title);
+        }
 
-        SheetItemAdapter adapter = new SheetItemAdapter(getReactApplicationContext(), optionsTitles, onSelect);
+        SheetItemAdapter adapter = new SheetItemAdapter(getReactApplicationContext(), optionsTitles, tintColor, onSelect);
         listView.setAdapter(adapter);
 
         actionSheetDialog.setContentView(sheetView);
@@ -60,11 +75,13 @@ public class ActionSheetModule extends ReactContextBaseJavaModule {
         private final Context context;
         private final ArrayList<String> options;
         private final Callback onSelect;
+        private final String tintColor;
 
-        SheetItemAdapter(Context context, ArrayList<String> options, final Callback onSelect) {
+        SheetItemAdapter(Context context, ArrayList<String> options, String tintColor, final Callback onSelect) {
             this.context = context;
             this.options = options;
             this.onSelect = onSelect;
+            this.tintColor = tintColor;
         }
 
         @Override
@@ -94,6 +111,9 @@ public class ActionSheetModule extends ReactContextBaseJavaModule {
             TextView textView = (TextView) convertView.findViewById(R.id.action_sheet_item_text);
             textView.setText(options.get(position));
 
+            if(!tintColor.isEmpty()) {
+                textView.setTextColor(Color.parseColor(tintColor));
+            }
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

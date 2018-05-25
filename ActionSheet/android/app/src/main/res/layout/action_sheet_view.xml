@@ -1,10 +1,26 @@
-<LinearLayout app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
     android:layout_width="match_parent"
     android:layout_height="180dp"
+
     android:orientation="vertical"
     android:background="#ffffff"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/action_sheet_title"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:fontFamily="sans-serif"
+        android:hapticFeedbackEnabled="false"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="20dp"
+        android:text="Title"
+        android:textColor="#757575"
+        android:textSize="16sp"
+        android:visibility="gone"/>
 
     <ListView
         android:id="@+id/action_sheet_list_view"

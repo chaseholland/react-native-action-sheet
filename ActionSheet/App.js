@@ -46,7 +46,8 @@ export default class App extends Component<Props> {
   }
   _onPressButton() {
     nativeActionSheet.showActionSheetWithOptions({
-      options: options
+      options: options,
+      title: "Actions"
     },
     (buttonIndex) => {
       // Do something here depending on the button index selected
